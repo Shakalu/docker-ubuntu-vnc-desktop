@@ -77,7 +77,35 @@ RUN apt-get update \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/cache/apt/* /tmp/a.txt /tmp/b.txt
+    
+    
+################################################################################
+# Shakalu
+################################################################################
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends g++ libc6-dev make cmake qtbase5-dev qtbase5-private-dev qtbase5-dev-tools qttools5-dev \
+    && qttools5-dev-tools qtdeclarative5-dev qtquickcontrols2-5-dev libfakekey-dev xorg-dev libxtst-dev \
+    && libjpeg-dev zlib1g-dev libssl-dev libpam0g-dev libprocps-dev liblzo2-dev libqca-qt5-2-dev \ 
+    && libldap2-dev libsasl2-dev libkf5itemmodels-dev git
+RUN git clone --recursive https://github.com/veyon/veyon.git \
+    && cd veyon \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
+    && cmake --build . \
+    && make install
+RUN apt-get install -y --no-install-recommends npm
+RUN npm install -g --unsafe-perm node-red
 
+RUN pip3 install --upgrade pip
+RUN cd \
+    && git clone https://github.com/coreemu/core.git \
+    && cd core \
+    && ./setup.sh \
+    && inv install -l
+RUN apt-get install -y --no-install-recommends bash bridge-utils ebtables iproute2 iputils-ping quagga quagga-doc openssh-server \
+    && isc-dhcp-server isc-dhcp-client vsftpd apache2 tcpdump radvd at ucarp openvpn traceroute mgen wireshark iperf3 tshark snmpd \
+    && snmptrapd openssh-client
 
 ################################################################################
 # builder
@@ -108,33 +136,7 @@ RUN cd /src/web \
     && yarn build
 RUN sed -i 's#app/locale/#novnc/app/locale/#' /src/web/dist/static/novnc/app/ui.js
 
-################################################################################
-# Shakalu
-################################################################################
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends g++ libc6-dev make cmake qtbase5-dev qtbase5-private-dev qtbase5-dev-tools qttools5-dev \
-    && qttools5-dev-tools qtdeclarative5-dev qtquickcontrols2-5-dev libfakekey-dev xorg-dev libxtst-dev \
-    && libjpeg-dev zlib1g-dev libssl-dev libpam0g-dev libprocps-dev liblzo2-dev libqca-qt5-2-dev \ 
-    && libldap2-dev libsasl2-dev libkf5itemmodels-dev git
-RUN git clone --recursive https://github.com/veyon/veyon.git \
-    && cd veyon \
-    && mkdir build \
-    && cd build \
-    && cmake .. \
-    && cmake --build . \
-    && make install
-RUN apt-get install -y --no-install-recommends npm
-RUN npm install -g --unsafe-perm node-red
 
-RUN pip3 install --upgrade pip
-RUN cd \
-    && git clone https://github.com/coreemu/core.git \
-    && cd core \
-    && ./setup.sh \
-    && inv install -l
-RUN apt-get install -y --no-install-recommends bash bridge-utils ebtables iproute2 iputils-ping quagga quagga-doc openssh-server \
-    && isc-dhcp-server isc-dhcp-client vsftpd apache2 tcpdump radvd at ucarp openvpn traceroute mgen wireshark iperf3 tshark snmpd \
-    && snmptrapd openssh-client
 
 ################################################################################
 # merge
