@@ -93,7 +93,7 @@ RUN git clone --recursive https://github.com/veyon/veyon.git \
     && cmake .. \
     && cmake --build . \
     && make install
-RUN apt-get install -y --no-install-recommends npm python3-pip python3-invoke
+RUN apt-get install -y --no-install-recommends npm python3-pip
 RUN npm install -g --unsafe-perm node-red
 
 RUN pip3 install --upgrade pip
@@ -101,7 +101,9 @@ RUN cd \
     && git clone https://github.com/coreemu/core.git \
     && cd core \
     && ./setup.sh
-RUN inv install -l
+RUN cd \
+    && cd core \
+    && inv install -l
 #RUN pip install --upgrade pip \
 #    && pip install poetry \
 #    && pip install invoke
