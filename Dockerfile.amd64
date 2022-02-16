@@ -93,18 +93,18 @@ RUN git clone --recursive https://github.com/veyon/veyon.git \
     && cmake .. \
     && cmake --build . \
     && make install
-RUN apt-get install -y --no-install-recommends npm
+RUN apt-get install -y --no-install-recommends npm python3-pip
 RUN npm install -g --unsafe-perm node-red
 
-RUN pip install --upgrade pip
+RUN pip3 install --upgrade pip
 RUN cd \
     && git clone https://github.com/coreemu/core.git \
     && cd core \
     && ./setup.sh \
     && inv install -l
-RUN pip install --upgrade pip \
-    && pip install poetry \
-    && pip install invoke
+#RUN pip install --upgrade pip \
+#    && pip install poetry \
+#    && pip install invoke
 RUN apt-get install -y --no-install-recommends bash bridge-utils ebtables iproute2 iputils-ping quagga quagga-doc openssh-server \
        isc-dhcp-server isc-dhcp-client vsftpd apache2 tcpdump radvd at ucarp openvpn traceroute mgen wireshark iperf3 tshark snmpd \
        snmptrapd openssh-client
