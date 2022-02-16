@@ -100,8 +100,8 @@ RUN pip3 install --upgrade pip
 RUN cd \
     && git clone https://github.com/coreemu/core.git \
     && cd core \
-    && ./setup.sh
-
+    && ./setup.sh \
+    && pip3 install invoke
 RUN bash -c "source ${HOME}/.bashrc" \
 #RUN PATH="$PATH" \
 #    && exec bash \
