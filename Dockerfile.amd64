@@ -93,7 +93,7 @@ RUN git clone --recursive https://github.com/veyon/veyon.git \
     && cmake .. \
     && cmake --build . \
     && make install
-RUN apt-get install -y --no-install-recommends npm python3-pip
+RUN apt-get install -y --no-install-recommends npm python3-pip python3-invoke
 RUN npm install -g --unsafe-perm node-red
 
 RUN pip3 install --upgrade pip
