@@ -101,7 +101,8 @@ RUN cd \
     && git clone https://github.com/coreemu/core.git \
     && cd core \
     && ./setup.sh \
-    && pip3 install invoke
+    && pip3 install invoke \
+    && pip3 install poetry
 RUN bash -c "source ${HOME}/.bashrc" \
 #RUN PATH="$PATH" \
 #    && exec bash \
