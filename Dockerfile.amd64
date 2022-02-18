@@ -108,7 +108,7 @@ RUN bash -c "source ${HOME}/.bashrc" \
 #    && exec bash \
     && cd \
     && cd core \
-    && inv install -l
+    && inv install -l -p /usr/local/bin
 #RUN pip install --upgrade pip \
 #    && pip install poetry \
 #    && pip install invoke
